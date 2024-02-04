@@ -1,0 +1,49 @@
+.data
+first: .asciiz " first number:"
+sec : .asciiz "second number:"
+result: .asciiz "smaller number is:"
+
+
+.text
+
+.globl main
+
+main:
+li $v0,4
+la $a0,first
+syscall
+li $v0,5
+syscall
+move $t1,$v0
+
+li $v0,4
+la $a0,sec
+syscall
+li $v0,5
+syscall
+move $t2,$v0
+
+
+
+blt $t1,$t2,res2
+blt $t2,$t1, res1
+
+res1:li $v0,4
+     la $a0 ,result
+     syscall
+     
+     move $a0,$t2
+     li $v0,1
+     syscall
+     b exit
+
+res2:li $v0,4
+     la $a0,result
+     syscall
+     move $a0,$t1
+     li $v0,1
+     syscall
+     b exit
+
+exit: li $v0,10
+      syscall
